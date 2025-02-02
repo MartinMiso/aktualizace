@@ -86,7 +86,7 @@ def get_wifi_signal_strength():
         return None
 
 # URL k raw souboru na GitHubu
-RAW_GITHUB_URL = "https://raw.githubusercontent.com/MartinMiso/Projekt-analyzator_vcel/refs/heads/main/aktualizace/main.py"
+RAW_GITHUB_URL = "https://raw.githubusercontent.com/MartinMiso/aktualizace/refs/heads/main/main.py"
 
 # Interval pro aktualizaci (1 týden = 7 dní * 24 hodin * 60 minut * 60 sekund)
 ONE_WEEK = 1 * 1 * 60 * 1
