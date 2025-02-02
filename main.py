@@ -266,7 +266,7 @@ while True:
         # měření síly wifi
         rssi = get_wifi_signal_strength()
         # Měření zvukové hladiny
-        audio_zvuk = read_audio()
+        #audio_zvuk = read_audio()
         # Měření frekvence
         frekvence = measure_freq()
              
