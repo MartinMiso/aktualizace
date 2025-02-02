@@ -125,7 +125,7 @@ def load_first_weight():
 
 
 # Funkce pro odeslání dat na ThingSpeak
-def send_data(temperature_aht, humidity_aht, temperature_bmp, pressure_bmp, weight, rssi, audio_zvuk, frekvence):
+def send_data(temperature_aht, humidity_aht, temperature_bmp, pressure_bmp, weight, rssi, frekvence):
     # Vytvoření URL s parametry
     url = (f"{THINGSPEAK_URL}?api_key={THINGSPEAK_API_KEY}"
            f"&field1={temperature_aht}"
@@ -134,7 +134,7 @@ def send_data(temperature_aht, humidity_aht, temperature_bmp, pressure_bmp, weig
            f"&field4={pressure_bmp}"
            f"&field5={weight}"
            f"&field6={rssi}"
-           f"&field7={audio_zvuk}"
+           #f"&field7={audio_zvuk}"
            f"&field8={frekvence}")
     
     try:
@@ -282,7 +282,7 @@ while True:
             print("Chyba poslání notifikace:", e)
                 
     # odeslání dat
-        send_data(temp_aht, hum_aht, temp_bmp, pres_bmp, weight, rssi, audio_zvuk, frekvence)
+        send_data(temp_aht, hum_aht, temp_bmp, pres_bmp, weight, rssi, frekvence)
     except Exception as e:
         print("Chyba senzoru:", e)
     
