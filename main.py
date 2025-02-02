@@ -287,4 +287,4 @@ while True:
         print("Chyba senzoru:", e)
     
     time.sleep(10)
-    deep_sleep(300000) # Odesílání každých 15 sekund
+    deep_sleep(600000) # Hluboký spánek na 10 minut
