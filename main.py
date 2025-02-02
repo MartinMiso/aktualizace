@@ -89,7 +89,7 @@ def get_wifi_signal_strength():
 RAW_GITHUB_URL = "https://raw.githubusercontent.com/MartinMiso/aktualizace/refs/heads/main/main.py"
 
 # Interval pro aktualizaci (1 týden = 7 dní * 24 hodin * 60 minut * 60 sekund)
-ONE_WEEK = 1 * 1 * 60 * 1
+ONE_WEEK = 1 * 1 * 1 * 1
 
 # ThingSpeak API informace
 THINGSPEAK_API_KEY = "OW890QF6K2CTV5P6"  # Nahraďte vaším Write API Key
