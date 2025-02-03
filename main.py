@@ -186,8 +186,6 @@ def measure_freq():
 # CallMeBot API - nastavení odesílaných zpráv na WhatsApp
 
 def send_whatsapp(number, api_key):
-    #number = "420733113537"  # Nahraď svým číslem
-    #api_key = "3142801"
     message = "TEST+VČELY:+asi+si+balíme+baťůžky+a+mizíme+z+úlu!!!"
     url = f"https://api.callmebot.com/whatsapp.php?phone={number}&text={message}&apikey={api_key}"
     
