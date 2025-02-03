@@ -11,9 +11,7 @@ import urequests
 from hx711 import HX711
 from machine import Timer
 from bmp280 import BMP280
-from machine import I2S
-from machine import Pin, I2C
-
+from machine import I2S, Pin, I2C, ADC
 
 
 # WiFi připojení
