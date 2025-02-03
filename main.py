@@ -192,6 +192,7 @@ def send_whatsapp(number, api_key):
     try:
         response = urequests.get(url)
         print("Odpověď serveru:", response.text)
+        response.close()
     except Exception as e:
         print("Chyba:", e)
                
