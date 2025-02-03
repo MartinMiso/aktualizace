@@ -54,10 +54,6 @@ def connect_wifi():
 # síla wifi signálu
 def get_wifi_signal_strength():
     wlan = network.WLAN(network.STA_IF)
-    if wlan.active():
-        print("WiFi modul je aktivní.")
-    else:
-        print("WiFi modul není aktivní.")
     if wlan.isconnected():
         rssi = wlan.status('rssi')  # Vrátí sílu signálu v dBm
         print(f"Síla signálu WiFi: {rssi} dBm")
