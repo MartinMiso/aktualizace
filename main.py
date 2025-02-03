@@ -1,5 +1,5 @@
 import os
-import time
+
 import math
 import ahtx0
 import utime
@@ -26,23 +26,6 @@ adc.atten(machine.ADC.ATTN_11DB)
 
 FS = 16000  # Vzorkovací frekvence
 N = 256  # Počet vzorků (vyšší N = přesnější, ale pomalejší)
-
-#Inicializace pinů pro INMP441
-sck_pin = Pin(27)   # Serial clock output
-ws_pin = Pin(25)    # Word clock output
-sd_pin = Pin(26)    # Serial data output
-
-# Inicializace I2S pro INMP441 mikrofon
-i2s = I2S(0, 
-          sck=sck_pin, 
-          ws=ws_pin, 
-          sd=sd_pin, 
-          mode=I2S.RX,      # Režim příjmu (RX)
-          bits=16,          # Rozlišení vzorku (16 bitů)
-          format=I2S.MONO,  # Mono režim
-          rate=16000,       # Vzorkovací frekvence (16 kHz)
-          ibuf=2048         # Velikost interního bufferu
-)
 
 
 # Nastavení I2C sběrnice
@@ -94,7 +77,6 @@ ONE_WEEK = 1 * 1 * 1 * 1
 # ThingSpeak API informace
 THINGSPEAK_API_KEY = "OW890QF6K2CTV5P6"  # Nahraďte vaším Write API Key
 THINGSPEAK_URL = "https://api.thingspeak.com/update"
-
 
 
 # Kalibrační faktor
@@ -209,30 +191,18 @@ def measure_freq():
     
 # CallMeBot API - nastavení odesílaných zpráv na WhatsApp
 
-def send_whatsapp1():
-    WHATSAPP_NUMBER = "420733113537"  # Nahraď svým číslem
-    API_KEY = "3142801"
-    MESSAGE = "TEST+VČELY:+asi+si+balíme+baťůžky+a+mizíme+z+úlu!!!"
-    url = f"https://api.callmebot.com/whatsapp.php?phone={WHATSAPP_NUMBER}&text={MESSAGE}&apikey={API_KEY}"
+def send_whatsapp(number, api_key):
+    #number = "420733113537"  # Nahraď svým číslem
+    #api_key = "3142801"
+    message = "TEST+VČELY:+asi+si+balíme+baťůžky+a+mizíme+z+úlu!!!"
+    url = f"https://api.callmebot.com/whatsapp.php?phone={number}&text={message}&apikey={api_key}"
     
     try:
         response = urequests.get(url)
         print("Odpověď serveru:", response.text)
     except Exception as e:
         print("Chyba:", e)
-        
-def send_whatsapp2():
-    WHATSAPP_NUMBER = "420603498872"  # Nahraď svým číslem
-    API_KEY = "4097369"
-    MESSAGE = "TEST+VČELY:+asi+si+balíme+baťůžky+a+mizíme+z+úlu!!!"
-    url = f"https://api.callmebot.com/whatsapp.php?phone={WHATSAPP_NUMBER}&text={MESSAGE}&apikey={API_KEY}"
-    
-    try:
-        response = urequests.get(url)
-        print("Odpověď serveru:", response.text)
-    except Exception as e:
-        print("Chyba:", e)
-        
+               
 
 def deep_sleep(seconds):
     print("Přecházím do hlubokého spánku na 10 minut.")
@@ -265,15 +235,13 @@ while True:
         weight = read_weight()
         # měření síly wifi
         rssi = get_wifi_signal_strength()
-        # Měření zvukové hladiny
-        #audio_zvuk = read_audio()
         # Měření frekvence
         frekvence = measure_freq()
              
         try:
             if 95 < frekvence < 260:
-                send_whatsapp1()  # Pošle upozornění
-                #send_whatsapp2() 
+                send_whatsapp("420733113537", "3142801")  # Pošle upozornění
+                #send_whatsapp("420603498872", "4097369") # Jirka
                 print("Asi se rojíme")
             
             else:
@@ -286,5 +254,4 @@ while True:
     except Exception as e:
         print("Chyba senzoru:", e)
     
-    time.sleep(10)
     deep_sleep(600000) # Hluboký spánek na 10 minut
