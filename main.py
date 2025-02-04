@@ -229,22 +229,25 @@ while True:
         # měření síly wifi
         rssi = get_wifi_signal_strength()
         # Měření frekvence
-        frekvence = measure_freq()
-             
-        try:
-            if 95 < frekvence < 260:
-                send_whatsapp("420733113537", "3142801")  # Pošle upozornění
-                #send_whatsapp("420603498872", "4097369") # Jirka
-                print("Asi se rojíme")
-            
-            else:
-                print("Vše OK")  # Pokud frekvence není v rozsahu, vypíše zprávu
-        except Exception as e:
-            print("Chyba poslání notifikace:", e)
-                
-    # odeslání dat
-        send_data(temp_aht, hum_aht, temp_bmp, pres_bmp, weight, rssi, frekvence)
-    except Exception as e:
-        print("Chyba senzoru:", e)
+        #frekvence = measure_freq()
+
+    prumer = []  # Definice seznamu pro průměr
+
+    try:
+        for _ in range(5):  # Cyklus poběží 5krát
+            frekvence = measure_freq()  # Měření frekvence
+            prumer.append(frekvence)  # Uložení do seznamu
+
+            prum_frek = sum(prumer) / len(prumer)  # Výpočet průměru
+
+                if 95 < frekvence < 260:  # Kontrola frekvence
+                    send_whatsapp("420733113537", "3142801")  # Pošle upozornění
+                    #send_whatsapp("420603498872", "4097369")  # Jirka
+                    print("Asi se rojíme")
     
+        print("Vše OK")  # Pokud cyklus doběhne bez výstrahy
+    except Exception as e:
+        print("Chyba poslání notifikace:", e)
+             
+      
     deep_sleep(600000) # Hluboký spánek na 10 minut
