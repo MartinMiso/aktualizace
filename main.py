@@ -231,7 +231,7 @@ while True:
         # Měření frekvence
         #frekvence = measure_freq()
 
-    prumer = []  # Definice seznamu pro průměr
+        prumer = []  # Definice seznamu pro průměr
 
     try:
         for _ in range(5):  # Cyklus poběží 5krát
