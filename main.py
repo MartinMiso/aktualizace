@@ -241,10 +241,10 @@ while True:
 
                 prum_frekvence = sum(prumer) / len(prumer)  # Výpočet průměru
 
-                if 95 < prum_frekvence < 260:  # Kontrola frekvence
-                    send_whatsapp("420733113537", "3142801")  # Pošle upozornění
-                    #send_whatsapp("420603498872", "4097369")  # Jirka
-                    print("Asi se rojíme")
+            if 95 < prum_frekvence < 260:  # Kontrola frekvence
+                send_whatsapp("420733113537", "3142801")  # Pošle upozornění
+                #send_whatsapp("420603498872", "4097369")  # Jirka
+                print("Asi se rojíme")
     
             print("Vše OK")  # Pokud cyklus doběhne bez výstrahy
         except Exception as e:
