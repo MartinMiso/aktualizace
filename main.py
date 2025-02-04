@@ -239,9 +239,9 @@ while True:
                 frekvence = measure_freq()  # Měření frekvence
                 prumer.append(frekvence)  # Uložení do seznamu
 
-                prum_frek = sum(prumer) / len(prumer)  # Výpočet průměru
+                prum_frekvence = sum(prumer) / len(prumer)  # Výpočet průměru
 
-                if 95 < frekvence < 260:  # Kontrola frekvence
+                if 95 < prum_frekvence < 260:  # Kontrola frekvence
                     send_whatsapp("420733113537", "3142801")  # Pošle upozornění
                     #send_whatsapp("420603498872", "4097369")  # Jirka
                     print("Asi se rojíme")
