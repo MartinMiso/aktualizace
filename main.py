@@ -110,7 +110,7 @@ def send_data(temperature_aht, humidity_aht, temperature_bmp, pressure_bmp, weig
            f"&field4={pressure_bmp}"
            f"&field5={weight}"
            f"&field6={rssi}"
-           f"&field7={frekvence}"
+           f"&field7={prum_frekvence}"
            )
     
     try:
