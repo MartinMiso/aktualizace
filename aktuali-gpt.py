@@ -164,3 +164,29 @@ while True:
 
     # Hluboký spánek na 10 minut
     deep_sleep(600000)
+
+
+"""
+mazaní tara.txt
+
+import os
+
+FLAG_FILE = "first_run.flag"
+TARGET_FILE = "data.txt"
+
+# Získáme seznam souborů v aktuálním adresáři
+files = os.listdir()
+
+# Pokud flag soubor ještě neexistuje
+if FLAG_FILE not in files:
+    try:
+        os.remove(TARGET_FILE)
+        print("Soubor {} byl smazán při prvním spuštění.".format(TARGET_FILE))
+    except OSError:
+        print("Soubor {} nebyl nalezen.".format(TARGET_FILE))
+    # Vytvoříme flag soubor
+    with open(FLAG_FILE, "w") as f:
+        f.write("první spuštění proběhlo")
+else:
+    print("Flag soubor existuje – soubor {} nebyl smazán.".format(TARGET_FILE))
+"""
