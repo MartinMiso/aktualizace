@@ -243,7 +243,7 @@ while True:
             prum_frekvence = sum(prumer) / len(prumer)  # Výpočet průměru
             print(f"Průměrná frekvence: {prum_frekvence} Hz")
 
-            if 95 < prum_frekvence < 260:  # Kontrola frekvence
+            if 350 < prum_frekvence < 500:  # Kontrola frekvence
                 send_whatsapp("420733113537", "3142801")  # Pošle upozornění
                 #send_whatsapp("420603498872", "4097369")  # Jirka
                 print("Asi se rojíme")
