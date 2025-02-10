@@ -236,7 +236,7 @@ while True:
 
         try:
             for _ in range(10):  # Cyklus poběží 10krát
-                time.sleep(1)
+                time.sleep(0.5)
                 frekvence = measure_freq()  # Měření frekvence
                 prumer.append(frekvence)  # Uložení do seznamu
 
