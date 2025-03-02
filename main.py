@@ -124,7 +124,7 @@ def send_data(temperature_aht, humidity_aht, temperature_bmp, pressure_bmp, weig
 
 def wheather_sensor_measure():
     # Čtení dat z AHT20
-    temperature_aht = sensor.temperature - 1.5
+    temperature_aht = sensor.temperature
     humidity_aht = sensor.relative_humidity
     print("AHT senzor:")
     print(f"Teplota: {temperature_aht:.2f} °C, Vlhkost: {humidity_aht:.2f} %")
