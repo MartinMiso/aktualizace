@@ -235,8 +235,8 @@ while True:
         prumer = []  # Definice seznamu pro průměr
 
         try:
-            for _ in range(10):  # Cyklus poběží 10krát
-                time.sleep(1)
+            for _ in range(30):  # Cyklus poběží 10krát
+                time.sleep(0.5)
                 frekvence = measure_freq()  # Měření frekvence
                 prumer.append(frekvence)  # Uložení do seznamu
 
