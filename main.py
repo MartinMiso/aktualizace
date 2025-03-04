@@ -259,5 +259,5 @@ while True:
         print("Chyba senzoru:", e)
      
     #time.sleep(20)
-    deep_sleep(600000) # Hluboký spánek na 10 minut
+    deep_sleep(900000) # Hluboký spánek na 15 minut
 
