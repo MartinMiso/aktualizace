@@ -27,20 +27,26 @@ N = 256  # Počet vzorků (vyšší N = přesnější, ale pomalejší)
 
 
 # Nastavení I2C sběrnice
-i2c = I2C(0, scl=Pin(22), sda=Pin(21))  # BMP280 + AHT20 senzor
-# Inicializace AHT20
-sensor = ahtx0.AHT20(i2c)
-# Inicializace BMP280
-bmp = BMP280(i2c, address=0x77)
-print(i2c.scan())
+try:
+    i2c = I2C(0, scl=Pin(22), sda=Pin(21))  # BMP280 + AHT20 senzor
+    # Inicializace AHT20
+    sensor = ahtx0.AHT20(i2c)
+    # Inicializace BMP280
+    bmp = BMP280(i2c, address=0x77)
+    print(i2c.scan())
+except Exception as e:
+    print("Chyba načtení čidla teploty a tlaku: ", e)
 
 # Definice pinů pro HX711
-DT = 4   # Data pin (DT)
-SCK = 5  # Clock pin (SCK)
-# Inicializace HX711
-hx = HX711(d_out=DT, pd_sck=SCK)
-hx.tare()
-#tare_value = hx.offset
+try:
+    DT = 4   # Data pin (DT)
+    SCK = 5  # Clock pin (SCK)
+    # Inicializace HX711
+    hx = HX711(d_out=DT, pd_sck=SCK)
+    hx.tare()
+    #tare_value = hx.offset
+except Exception as e:
+    print("Chyba načtení váhového senzoru: ", e)
 
 # wifi připojení
 def connect_wifi():
