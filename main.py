@@ -118,13 +118,21 @@ def send_field(field_number, value):
 
 # Původní send_data nahradíme:
 def send_data_separate(temperature_aht, humidity_aht, temperature_bmp, pressure_bmp, weight, rssi, prum_frekvence):
-    send_field(1, temperature_aht)
-    send_field(2, humidity_aht)
-    send_field(3, temperature_bmp)
-    send_field(4, pressure_bmp)
-    send_field(5, weight)
-    send_field(6, rssi)
-    send_field(7, prum_frekvence)
+    data = [
+        (1, temperature_aht),
+        (2, humidity_aht),
+        (3, temperature_bmp),
+        (4, pressure_bmp),
+        (5, weight),
+        (6, rssi),
+        (7, prum_frekvence),
+    ]
+    for field, value in data:
+        if value is None:
+            print(f"Field{field} má None, přeskočeno.")
+            continue
+        send_field(field, value)
+
 
 # Funkce pro odeslání dat na ThingSpeak
 #def send_data(temperature_aht, humidity_aht, temperature_bmp, pressure_bmp, weight, rssi, prum_frekvence):
@@ -248,42 +256,61 @@ else:
 
 
 while True:
+    # Čtení povětrnostních dat
     try:
-        # měření povětrnostních dat
-        temp_aht, hum_aht, temp_bmp, pres_bmp = wheather_sensor_measure()
-        # měření váhy
-        weight = read_weight()
-        # měření síly wifi
-        rssi = get_wifi_signal_strength()
-        # Měření frekvence
-        
-
-        prumer = []  # Definice seznamu pro průměr
-
-        try:
-            for _ in range(35):  # Cyklus poběží 35krát
-                time.sleep(0.5)
-                frekvence = measure_freq()  # Měření frekvence
-                prumer.append(frekvence)  # Uložení do seznamu
-
-            prum_frekvence = sum(prumer) / len(prumer)  # Výpočet průměru
-            print(f"Průměrná frekvence: {prum_frekvence} Hz")
-
-            if 350 < prum_frekvence < 500:  # Kontrola frekvence
-                send_whatsapp("420733113537", "3142801")  # Pošle upozornění
-                #send_whatsapp("420603498872", "4097369")  # Jirka
-                print("Asi se rojíme")
-    
-            else:
-                print("Vše OK")  # Pokud cyklus doběhne bez výstrahy
-        except Exception as e:
-            print("Chyba poslání notifikace:", e)
-
-    # odeslání dat
-        send_data_separate(temp_aht, hum_aht, temp_bmp, pres_bmp, weight, rssi, prum_frekvence)
+        temp_aht = sensor.temperature
+        hum_aht  = sensor.relative_humidity
+        print(f"AHT: {temp_aht:.2f} °C, {hum_aht:.2f} %")
     except Exception as e:
-        print("Chyba senzoru:", e)
-     
-    #time.sleep(20)
-    deep_sleep(900000) # Hluboký spánek na 15 minut
+        print("Chyba čtení AHT sensoru:", e)
+        temp_aht = None
+        hum_aht  = None
+
+    # Čtení BMP
+    try:
+        temp_bmp, pres_bmp = bmp.read_temperature_pressure()
+        print(f"BMP: {temp_bmp:.2f} °C, {pres_bmp:.2f} hPa")
+    except Exception as e:
+        print("Chyba čtení BMP sensoru:", e)
+        temp_bmp = None
+        pres_bmp = None
+
+    # Váha
+    try:
+        weight = read_weight()
+    except Exception as e:
+        print("Chyba čtení váhy:", e)
+        weight = None
+
+    # WiFi RSSI
+    try:
+        rssi = get_wifi_signal_strength()
+    except Exception as e:
+        print("Chyba čtení RSSI:", e)
+        rssi = None
+
+    # Průměr frekvence
+    try:
+        prumer = []
+        for _ in range(35):
+            time.sleep(0.5)
+            prumer.append(measure_freq())
+        prum_frekvence = sum(prumer) / len(prumer)
+        print(f"Průměrná frekvence: {prum_frekvence} Hz")
+
+        # WhatsApp notifikace
+        if 350 < prum_frekvence < 500:
+            send_whatsapp("420733113537", "3142801")
+            print("Asi se rojíme")
+        else:
+            print("Vše OK")
+    except Exception as e:
+        print("Chyba měření frekvence nebo notifikace:", e)
+        prum_frekvence = None
+
+    # Odeslání dat na ThingSpeak
+    send_data_separate(temp_aht, hum_aht, temp_bmp, pres_bmp, weight, rssi, prum_frekvence)
+
+    # Přechod do hlubokého spánku
+    deep_sleep(900000)  # 15 minut
 
