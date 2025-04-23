@@ -105,27 +105,47 @@ def load_first_weight():
         print("Tara nenalezena nebo poškozena. Nastavuje se výchozí.")
         return None # Výchozí hodnota tary
 
-
-# Funkce pro odeslání dat na ThingSpeak
-def send_data(temperature_aht, humidity_aht, temperature_bmp, pressure_bmp, weight, rssi, prum_frekvence):
-    # Vytvoření URL s parametry
+# Pomocná funkce pro odeslání jednoho pole na ThingSpeak
+def send_field(field_number, value):
     url = (f"{THINGSPEAK_URL}?api_key={THINGSPEAK_API_KEY}"
-           f"&field1={temperature_aht}"
-           f"&field2={humidity_aht}"
-           f"&field3={temperature_bmp}"
-           f"&field4={pressure_bmp}"
-           f"&field5={weight}"
-           f"&field6={rssi}"
-           f"&field7={prum_frekvence}"
-           )
-    
+           f"&field{field_number}={value}")
     try:
-        # Odeslání požadavku
         response = urequests.get(url)
-        print("Odpověď serveru:", response.text)
+        print(f"Odpověď serveru (field{field_number}):", response.text)
         response.close()
     except Exception as e:
-        print("Chyba při odesílání dat na ThingSpeak:", e)
+        print(f"Chyba při odesílání field{field_number}:", e)
+
+# Původní send_data nahradíme:
+def send_data_separate(temperature_aht, humidity_aht, temperature_bmp, pressure_bmp, weight, rssi, prum_frekvence):
+    send_field(1, temperature_aht)
+    send_field(2, humidity_aht)
+    send_field(3, temperature_bmp)
+    send_field(4, pressure_bmp)
+    send_field(5, weight)
+    send_field(6, rssi)
+    send_field(7, prum_frekvence)
+
+# Funkce pro odeslání dat na ThingSpeak
+#def send_data(temperature_aht, humidity_aht, temperature_bmp, pressure_bmp, weight, rssi, prum_frekvence):
+    # Vytvoření URL s parametry
+#    url = (f"{THINGSPEAK_URL}?api_key={THINGSPEAK_API_KEY}"
+#           f"&field1={temperature_aht}"
+#           f"&field2={humidity_aht}"
+#           f"&field3={temperature_bmp}"
+#           f"&field4={pressure_bmp}"
+#           f"&field5={weight}"
+#           f"&field6={rssi}"
+#           f"&field7={prum_frekvence}"
+#           )
+    
+#    try:
+#        # Odeslání požadavku
+#        response = urequests.get(url)
+#        print("Odpověď serveru:", response.text)
+#        response.close()
+#    except Exception as e:
+#        print("Chyba při odesílání dat na ThingSpeak:", e)
 
 
 def wheather_sensor_measure():
@@ -260,7 +280,7 @@ while True:
             print("Chyba poslání notifikace:", e)
 
     # odeslání dat
-        send_data(temp_aht, hum_aht, temp_bmp, pres_bmp, weight, rssi, prum_frekvence)
+        send_data_separate(temp_aht, hum_aht, temp_bmp, pres_bmp, weight, rssi, prum_frekvence)
     except Exception as e:
         print("Chyba senzoru:", e)
      
